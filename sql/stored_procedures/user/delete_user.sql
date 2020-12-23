@@ -1,0 +1,5 @@
+DROP PROCEDURE IF EXISTS delete_user;
+CREATE PROCEDURE delete_user(IN id_in BIGINT UNSIGNED)
+BEGIN
+    DELETE FROM user WHERE user.id = id_in;
+END;

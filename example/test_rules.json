@@ -1,0 +1,187 @@
+{
+  "seats": 2,
+  "allies": [
+    [
+      0,
+      1
+    ]
+  ],
+  "seat_colors": [
+    {
+      "color": "rgba(255, 0, 0, 255)"
+    },
+    {
+      "color": "rgba(0, 0, 255, 255)"
+    }
+  ],
+  "pieces": [
+    {
+      "name": "Big",
+      "capture_rules": {
+        "JumpOver": "EnemyOnly"
+      },
+      "jump_rule": "NoSameStart",
+      "capture_timing_rule": "AfterTurn",
+      "capture_requirement": {
+        "Forced": 10
+      },
+      "jump_limit": {
+        "Unlimited": {
+          "directions": {
+            "bits": 255
+          }
+        }
+      },
+      "move_rule": {
+        "AnyDirection": {
+          "limit": 1,
+          "directions": {
+            "bits": 255
+          }
+        }
+      },
+      "goal_move_rule": "Free",
+      "shape": "Circle",
+      "size": 0.9,
+      "outline_color": {
+        "color": "rgba(0, 0, 0, 255)"
+      }
+    },
+    {
+      "name": "Little",
+      "capture_rules": {
+        "JumpOver": "EnemyOnly"
+      },
+      "jump_rule": "NoSameStart",
+      "capture_timing_rule": "AfterTurn",
+      "capture_requirement": "None",
+      "jump_limit": {
+        "Limited": {
+          "limit": 1,
+          "directions": {
+            "bits": 255
+          }
+        }
+      },
+      "move_rule": {
+        "AnyDirection": {
+          "limit": 1,
+          "directions": {
+            "bits": 255
+          }
+        }
+      },
+      "goal_move_rule": "Free",
+      "shape": "Square",
+      "size": 0.6,
+      "outline_color": {
+        "color": "rgba(0, 0, 0, 255)"
+      }
+    }
+  ],
+  "board_type": {
+    "Custom": {
+      "v": 1,
+      "dim": [
+        4,
+        3
+      ],
+      "data": [
+        "Normal",
+        "Invalid",
+        "Normal",
+        "Normal",
+        "Normal",
+        "Normal",
+        "Normal",
+        "Normal",
+        "Normal",
+        "Normal",
+        "Normal",
+        "Normal"
+      ]
+    }
+  },
+  "starting_positions": {
+    "NotMirrored": [
+      [
+        [
+          {
+            "row": 1,
+            "column": 1
+          },
+          {
+            "row": 2,
+            "column": 2
+          },
+          {
+            "row": 7,
+            "column": 2
+          },
+          {
+            "row": 8,
+            "column": 1
+          }
+        ],
+        []
+      ],
+      [
+        [],
+        [
+          {
+            "row": 2,
+            "column": 1
+          },
+          {
+            "row": 3,
+            "column": 2
+          },
+          {
+            "row": 3,
+            "column": 3
+          },
+          {
+            "row": 3,
+            "column": 4
+          },
+          {
+            "row": 4,
+            "column": 4
+          },
+          {
+            "row": 4,
+            "column": 5
+          },
+          {
+            "row": 3,
+            "column": 5
+          },
+          {
+            "row": 3,
+            "column": 6
+          },
+          {
+            "row": 3,
+            "column": 7
+          },
+          {
+            "row": 2,
+            "column": 8
+          }
+        ]
+      ]
+    ]
+  },
+  "victory_conditions": [
+    {
+      "GoalCount": {
+        "amount": 2,
+        "valid_pieces": [
+          0,
+          1
+        ]
+      }
+    },
+    "AllCaptured"
+  ]
+}

@@ -5,7 +5,8 @@ const {CleanWebpackPlugin} = require("clean-webpack-plugin");
 module.exports = {
     mode: "development",
     entry: {
-        index: "./src/index.ts",
+        index: "./src/index.tsx",
+        ruleset_builder: "./src/ruleset_builder.tsx",
         chat: "./src/chat.ts",
         canvas: "./src/canvas.ts"
     },
@@ -21,7 +22,8 @@ module.exports = {
         rules: [
             {test: /\.css$/, use: ["style-loader", "css-loader"]},
             {test: /\.(png|svg|jpe?g|gif)$/i, loader: 'file-loader', options: {name: "assets/[hash].[ext]"}},
-            {test: /\.tsx?$/, use: 'ts-loader', exclude: /node_modules/},
+            {test: /\.tsx?$/, use: 'babel-loader', exclude: /node_modules/},
+            {test: /\.js$/, use: ["source-map-loader"], enforce: "pre"}
         ]
     },
     resolve: {
@@ -34,21 +36,28 @@ module.exports = {
             template: "./html/index.html",
             chunks: ["index"],
             filename: "./index.html",
-            publicPath: "/web"
+            publicPath: "/"
+        }),
+        new HtmlWebpackPlugin({
+            title: "RulesetBuilder",
+            template: "./html/ruleset_builder.html",
+            chunks: ["ruleset_builder"],
+            filename: "./ruleset_builder.html",
+            publicPath: "/"
         }),
         new HtmlWebpackPlugin({
             title: "Chat",
             template: "./html/chat.html",
             chunks: ["chat"],
             filename: "./chat.html",
-            publicPath: "/web"
+            publicPath: "/"
         }),
         new HtmlWebpackPlugin({
             title: "Canvas",
             template: "./html/canvas.html",
             chunks: ["canvas"],
             filename: "./canvas.html",
-            publicPath: "/web"
+            publicPath: "/"
         })
     ]
 };

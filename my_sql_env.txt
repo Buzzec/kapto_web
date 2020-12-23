@@ -1,0 +1,5 @@
+#/my_sql_env.txt
+MYSQL_RANDOM_ROOT_PASSWORD=yes
+MYSQL_DATABASE=kapto
+MYSQL_USER_FILE=/run/secrets/database_user
+MYSQL_PASSWORD_FILE=/run/secrets/database_password

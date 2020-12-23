@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="70817d89-a8e8-4841-ab20-7d9f91ff29b4" name="server-012">
+        <fileTransfer rootFolder="/mnt/glusterfs/main" accessType="SFTP" host="192.168.55.118" port="22" sshConfigId="0595b5c9-68c7-4fe0-8140-a0748510d976" sshConfig="manage@192.168.55.118:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

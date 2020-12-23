@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="server-012" createEmptyFolders="true" remoteFilesAllowedToDisappearOnAutoupload="false">
+    <serverData>
+      <paths name="server-012">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/kapto_web" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+          <excludedPaths>
+            <excludedPath local="true" path="$PROJECT_DIR$/target" />
+            <excludedPath local="true" path="$PROJECT_DIR$/website/dist" />
+            <excludedPath local="true" path="$PROJECT_DIR$/website/node_modules" />
+          </excludedPaths>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>

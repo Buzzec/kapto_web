@@ -3,7 +3,11 @@ use warp::Filter;
 
 use crate::chat::{Username, Users};
 
+pub mod database;
+pub mod game;
+
 pub mod chat;
+pub mod util;
 
 #[tokio::main]
 async fn main() {
@@ -20,8 +24,7 @@ async fn main() {
             })
         });
 
-    let web_route = warp::path!("web" / ..)
-        .and(warp::fs::dir("website/dist"));
+    let web_route = warp::fs::dir("website/dist");
 
     let users = Users::default();
     let users = warp::any().map(move || users.clone());
@@ -34,5 +37,9 @@ async fn main() {
             ws.on_upgrade(move |socket| chat::user_connected(socket, users, username.username))
         });
 
-    warp::serve(root.or(echo_route).or(web_route).or(chat_route)).run(([0, 0, 0, 0], 3030)).await;
+    warp::serve(
+            echo_route
+            .or(chat_route)
+            .or(web_route)
+    ).run(([0, 0, 0, 0], 3030)).await;
 }

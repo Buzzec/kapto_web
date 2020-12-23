@@ -1,0 +1,32 @@
+version: "3.8"
+services:
+  kapto_web:
+    image: 192.168.55.203:5000/kapto_web:latest
+    ports:
+      - 3030:3030
+    networks:
+      - database_network
+
+  database:
+    image: library/mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    networks:
+      database_network:
+        aliases:
+          - database
+    env_file:
+      - ./my_sql_env.txt
+    secrets:
+      - database_user
+      - database_password
+    volumes:
+
+networks:
+  database_network:
+
+secrets:
+  database_user:
+    external: true
+  database_password:
+    external: true
