@@ -8,7 +8,7 @@ module.exports = {
         index: "./src/index.tsx",
         ruleset_builder: "./src/ruleset_builder.tsx",
         chat: "./src/chat.ts",
-        canvas: "./src/canvas.ts"
+        bouncing_balls: "./src/bouncing_balls.tsx"
     },
     devtool: "inline-source-map",
     devServer: {
@@ -46,17 +46,10 @@ module.exports = {
             publicPath: "/"
         }),
         new HtmlWebpackPlugin({
-            title: "Chat",
-            template: "./html/chat.html",
-            chunks: ["chat"],
-            filename: "./chat.html",
-            publicPath: "/"
-        }),
-        new HtmlWebpackPlugin({
-            title: "Canvas",
-            template: "./html/canvas.html",
-            chunks: ["canvas"],
-            filename: "./canvas.html",
+            title: "Bouncing Balls",
+            template: "./html/bouncing_balls.html",
+            chunks: ["bouncing_balls"],
+            filename: "./bouncing_balls.html",
             publicPath: "/"
         })
     ]

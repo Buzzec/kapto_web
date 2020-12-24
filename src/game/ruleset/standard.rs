@@ -1,16 +1,16 @@
 use std::collections::HashMap;
 
-use ndarray::array;
-
 use crate::game::Coordinate;
 use crate::game::direction::Directions;
 use crate::game::ruleset::{BoardType, Ruleset};
-use crate::game::ruleset::board_type::space::Space;
+// use crate::game::ruleset::board_type::space::Space;
 use crate::game::ruleset::color::ColorBuiltIn;
 use crate::game::ruleset::piece_definition::{CaptureRequirement, CaptureRule, CaptureTarget, CaptureTimingRule, GoalMovementRule, JumpLimit, JumpRule, MoveRule, PieceDefinition};
 use crate::game::ruleset::shape::Shape;
 use crate::game::ruleset::starting_positions::StartingPositions;
 use crate::game::ruleset::victory_condition::VictoryCondition;
+
+// use ndarray::array;
 
 pub fn standard_rules() -> Ruleset {
     Ruleset {
@@ -64,19 +64,19 @@ fn get_pieces() -> Vec<PieceDefinition> {
     vec![big, small]
 }
 fn get_board() -> BoardType {
-    // BoardType::Rectangular {
-    //     rows: 10,
-    //     columns: 10,
-    //     goal_locations: vec![4, 5],
-    // }
-    BoardType::Custom(
-        array![
-        [Space::Normal, Space::Invalid, Space::Normal],
-        [Space::Normal, Space::Normal, Space::Normal],
-        [Space::Normal, Space::Normal, Space::Normal],
-        [Space::Normal, Space::Normal, Space::Normal]
-        ]
-    )
+    BoardType::Rectangular {
+        rows: 10,
+        columns: 10,
+        goal_locations: vec![4, 5],
+    }
+    // BoardType::Custom(
+    //     array![
+    //     [Space::Normal, Space::Invalid, Space::Normal],
+    //     [Space::Normal, Space::Normal, Space::Normal],
+    //     [Space::Normal, Space::Normal, Space::Normal],
+    //     [Space::Normal, Space::Normal, Space::Normal]
+    //     ]
+    // )
 }
 fn get_starting_positions() -> StartingPositions {
     // StartingPositions::MirroredFlipped(vec![

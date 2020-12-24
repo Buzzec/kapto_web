@@ -1,7 +1,8 @@
 {
   "presets": ["@babel/react", "@babel/typescript", ["@babel/env", {"modules": false}]],
   "plugins": [
-    "@babel/plugin-proposal-class-properties"
+    "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-transform-runtime"
   ],
   "env": {
     "test": {

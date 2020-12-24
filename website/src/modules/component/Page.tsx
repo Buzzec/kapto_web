@@ -1,6 +1,7 @@
-import {LoginState} from "./LoginState";
+import {LoginState, TestingParam} from "./LoginState";
 import {Nav} from "react-bootstrap";
 import React from "react";
+import {get_param} from "../QueryParams";
 
 export enum Page{
     Home,
@@ -9,6 +10,9 @@ export enum Page{
     RulesetExplorer,
     RulesetBuilder,
     Admin,
+    Account,
+    Login,
+    BouncingBalls,
 }
 
 export class PageMetaInfo{
@@ -21,6 +25,7 @@ export class PageMetaInfo{
         this.page = page;
         this.page_num = page.valueOf();
         this.page_address = location.protocol + "//" + location.host + "/";
+        this.page_name = "UNASSIGNED NAME";
         switch (page){
             case Page.Home:
                 this.page_address += "";
@@ -46,23 +51,48 @@ export class PageMetaInfo{
                 this.page_address += "admin.html";
                 this.page_name = "Admin";
                 break;
+            case Page.Account:
+                this.page_address += "account.html";
+                this.page_name = "Account";
+                break;
+            case Page.Login:
+                this.page_address += "login.html";
+                this.page_name = "Login";
+                break;
+            case Page.BouncingBalls:
+                this.page_address += "bouncing_balls.html";
+                this.page_name = "Bouncing Balls";
+                break;
+        }
+
+        const testing_param = get_param(TestingParam)
+        if (testing_param != null) {
+            this.page_address += "?testing=" + testing_param;
         }
     }
 
-    public can_see_page(login: LoginState): boolean{
-        switch (this.page){
+    public can_see_page(login: LoginState): boolean {
+        if (login == LoginState.AllAccess) {
+            return true;
+        }
+        switch (this.page) {
             // Anonymous can access
             case Page.Home:
             case Page.RulesetExplorer:
+            case Page.BouncingBalls:
                 return true;
             // Need to be logged in
             case Page.CreateGame:
             case Page.GamesList:
             case Page.RulesetBuilder:
+            case Page.Account:
                 return login > 0;
             // Need to be admin/under construction
             case Page.Admin:
                 return login > 1;
+            // Only if not logged in
+            case Page.Login:
+                return login == 0;
         }
     }
 

@@ -11,6 +11,10 @@ pub enum Procedure {
     GetRulesetsForUser,
     InsertRuleset,
 
+    // Token
+    CreateToken,
+    GetTokenById,
+
     // User
     DeleteUser,
     GetUserByEmail,
@@ -26,6 +30,11 @@ impl Procedure {
             Self::GetRulesetById => "CALL get_ruleset_by_id(:id)",
             Self::GetRulesetsForUser => "CALL get_rulesets_for_user(:user_id, :limit, :offset)",
             Self::InsertRuleset => "CALL insert_ruleset(:user_id, :version, :ruleset)",
+
+            // Token
+            Self::CreateToken => "CALL create_token(:user_id, :token)",
+            Self::GetTokenById => "CALL get_token_by_id(:id)",
+
             // User
             Self::DeleteUser => "CALL delete_user(:id)",
             Self::GetUserByEmail => "CALL get_user_by_email(:email)",

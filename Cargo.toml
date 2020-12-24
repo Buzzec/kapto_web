@@ -15,3 +15,6 @@ serde_json = "1.0.60"
 ndarray = { version = "0.14.0", features = ["serde"] }
 bitflags = "1.2.1"
 mysql_async = "0.25.0"
+pbkdf2 = "0.6.0"
+rand = "0.8.0"
+rand_core = { version = "0.5.1", features = ["std"] }

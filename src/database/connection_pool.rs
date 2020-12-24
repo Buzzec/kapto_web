@@ -1,4 +1,8 @@
+use std::convert::Infallible;
+use std::sync::Arc;
+
 use mysql_async::{Conn, OptsBuilder, Pool};
+use warp::Filter;
 
 use crate::database::DatabaseResult;
 use crate::util::get_env_var_array;
@@ -34,8 +38,12 @@ impl ConnectionPool{
         }
     }
 
-    pub async fn get_connection(&self) -> DatabaseResult<Conn>{
+    pub async fn get_connection(&self) -> DatabaseResult<Conn> {
         Ok(self.pool.get_conn().await?)
+    }
+
+    pub fn filter(self: Arc<Self>) -> impl Filter<Extract=(Arc<ConnectionPool>, ), Error=Infallible> + Clone {
+        warp::any().map(move || self.clone())
     }
 }
 

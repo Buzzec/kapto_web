@@ -1,37 +1,8 @@
-const canvas = document.getElementById("main_canvas") as HTMLCanvasElement;
-canvas.width = document.documentElement.clientWidth - 5;
-canvas.height = document.documentElement.clientHeight;
+const bouncing_balls = document.getElementById("main_canvas") as HTMLCanvasElement;
+bouncing_balls.width = document.documentElement.clientWidth - 5;
+bouncing_balls.height = document.documentElement.clientHeight;
 
-const c = canvas.getContext("2d");
-
-// c.fillStyle = "rgba(0, 255, 0, 1)"
-// c.fillRect(100, 100, 100, 100);
-//
-// // Line
-// c.beginPath();
-// c.moveTo(50, 300);
-// c.lineTo(300, 100);
-// c.lineTo(400, 300);
-// c.strokeStyle = "#fa34a3";
-// c.stroke();
-//
-// c.beginPath();
-// c.arc(300, 300, 30, 0, Math.PI * 2, false)
-// c.strokeStyle = "blue";
-// c.stroke();
-//
-// for (let i = 0; i < 100; i++){
-//     const x = Math.random() * canvas.width;
-//     const y = Math.random() * canvas.height;
-//     c.beginPath();
-//     c.arc(x, y, 30, 0, Math.PI * 2, false);
-//     c.strokeStyle = 'blue';
-//     c.stroke();
-// }
-// c.beginPath()
-// c.strokeStyle = "blue";
-// c.arc(200, 200, 30, 0, Math.PI * 2, false);
-// c.stroke();
+const c = bouncing_balls.getContext("2d");
 
 class Vector {
     x: number;
@@ -95,8 +66,8 @@ class Circle {
         this.id = id;
         this.radius = radius;
         this.location = new Vector(
-            Math.random() * (canvas.width - radius * 2) + radius,
-            Math.random() * (canvas.height - radius * 2) + radius
+            Math.random() * (bouncing_balls.width - radius * 2) + radius,
+            Math.random() * (bouncing_balls.height - radius * 2) + radius
         );
         this.velocity = new Vector(
             10 * 2 * (Math.random() - 0.5),
@@ -154,13 +125,13 @@ class Circle {
             }
         }
 
-        if (this.location.x + this.radius >= canvas.width) {
+        if (this.location.x + this.radius >= bouncing_balls.width) {
             this.velocity.x = -Math.abs(this.velocity.x);
         }
         if (this.location.x - this.radius <= 0) {
             this.velocity.x = Math.abs(this.velocity.x);
         }
-        if (this.location.y + this.radius >= canvas.height) {
+        if (this.location.y + this.radius >= bouncing_balls.height) {
             this.velocity.y = -Math.abs(this.velocity.y);
         }
         if (this.location.y - this.radius <= 0) {
@@ -200,15 +171,22 @@ for (let x = 0; x < circles.length; x++) {
 }
 const gravity = new Vector(0, 0)
 
-function animate() {
-    requestAnimationFrame(animate)
-    c.clearRect(0, 0, canvas.width, canvas.height);
+function animate(time: number, c: CanvasRenderingContext2D) {
+    requestAnimationFrame((time_new) => {
+        animate(time_new, c)
+    })
+
+    c.clearRect(0, 0, bouncing_balls.width, bouncing_balls.height);
     for (const circle of circles) {
         circle.update(gravity, circles, mouse_location);
         circle.draw(c);
     }
 }
-
-animate();
+if (c == null) {
+    throw "Context Null";
+}
+requestAnimationFrame((time_new) => {
+    animate(time_new, c)
+})
 
 

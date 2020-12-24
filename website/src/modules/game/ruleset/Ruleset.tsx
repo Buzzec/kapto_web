@@ -12,9 +12,9 @@ export class Ruleset{
     pieces: PieceDefinition[];
     board_type: BoardType;
     starting_positions: StartingPositions;
-    victory_conditions: VictoryCondition;
+    victory_conditions: VictoryCondition[];
 
-    constructor(name: string, seats: number, allies: number[][], seat_colors: Color[], pieces: PieceDefinition[], board_type: BoardType, starting_positions: StartingPositions, victory_conditions: VictoryCondition) {
+    constructor(name: string, seats: number, allies: number[][], seat_colors: Color[], pieces: PieceDefinition[], board_type: BoardType, starting_positions: StartingPositions, victory_conditions: VictoryCondition[]) {
         this.name = name;
         this.seats = seats;
         this.allies = allies;
@@ -24,7 +24,7 @@ export class Ruleset{
         this.starting_positions = starting_positions;
         this.victory_conditions = victory_conditions;
     }
-    static default(): Ruleset{
+    static default(): Ruleset {
         return new Ruleset(
             "Default Ruleset",
             2,
