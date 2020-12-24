@@ -1,6 +1,6 @@
 import {make_user_request, PacketError, PacketResult} from "./generic";
 import {AuthToken} from "./AuthToken";
-import {get_cookie, set_cookie} from "../cookie";
+import {delete_cookie, get_cookie, set_cookie} from "../cookie";
 
 export type UserRequest =
     { Register: { username: string, email: string, password: string } }
@@ -40,7 +40,7 @@ export class FullUser {
     }
 }
 
-const user_cname = "username";
+const user_cname = "user";
 const auth_token_cname = "auth_token";
 export function get_user(): null | FullUser {
     const cookie = get_cookie(user_cname);
@@ -56,10 +56,13 @@ export function get_auth_token(): null | AuthToken {
     }
     return JSON.parse(cookie);
 }
+export function logout(): void {
+    delete_cookie(user_cname);
+}
 
 export async function register(username: string, email: string, password: string): Promise<PacketResult<FullUser>> {
     const response = await make_user_request({Register: {username: username, email: email, password: password}});
-    if (response instanceof PacketError) {
+    if ("error_text" in response) {
         return response;
     }
     // @ts-ignore
@@ -68,11 +71,13 @@ export async function register(username: string, email: string, password: string
             return response.data.User.FullUser as FullUser;
         }
     }
+    console.error({response: response});
     return new PacketError("Bad Packet");
 }
 export async function login(username: string, password: string): Promise<PacketResult<void>> {
     const response = await make_user_request({Login: {username: username, password: password}});
-    if (response instanceof PacketError) {
+    console.log(response);
+    if ("error_text" in response) {
         return response;
     }
     // @ts-ignore
@@ -86,21 +91,23 @@ export async function login(username: string, password: string): Promise<PacketR
             return;
         }
     }
+    console.error({response: response});
     return new PacketError("Bad Packet");
 }
 export async function delete_user(username: string, password: string): Promise<PacketResult<void>> {
     const response = await make_user_request({DeleteUser: {username: username, password: password}});
-    if (response instanceof PacketError) {
+    if ("error_text" in response) {
         return response;
     }
     // @ts-ignore
     if (!("GenericSuccess" in response.data)) {
+        console.error({response: response});
         return new PacketError("Bad Packet");
     }
 }
 export async function get_user_info(identification: UserIdentification): Promise<PacketResult<PartialUser | FullUser>> {
     const response = await make_user_request({GetUserInfo: identification});
-    if (response instanceof PacketError) {
+    if ("error_text" in response) {
         return response;
     }
     // @ts-ignore
@@ -112,5 +119,6 @@ export async function get_user_info(identification: UserIdentification): Promise
             return response.data.User.FullUser
         }
     }
+    console.error({response: response});
     return new PacketError("Bad Packet");
 }

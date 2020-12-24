@@ -2,13 +2,23 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const {CleanWebpackPlugin} = require("clean-webpack-plugin");
 
+function html_generator(title, name) {
+    return new HtmlWebpackPlugin({
+        title: title,
+        template: "./html/" + name + ".html",
+        chunks: [name],
+        filename: "./" + name + ".html",
+        publicPath: "/"
+    });
+}
+
 module.exports = {
     mode: "development",
     entry: {
+        bouncing_balls: "./src/bouncing_balls.tsx",
         index: "./src/index.tsx",
+        login: "./src/login.tsx",
         ruleset_builder: "./src/ruleset_builder.tsx",
-        chat: "./src/chat.ts",
-        bouncing_balls: "./src/bouncing_balls.tsx"
     },
     devtool: "inline-source-map",
     devServer: {
@@ -31,26 +41,9 @@ module.exports = {
     },
     plugins: [
         new CleanWebpackPlugin(),
-        new HtmlWebpackPlugin({
-            title: "Index",
-            template: "./html/index.html",
-            chunks: ["index"],
-            filename: "./index.html",
-            publicPath: "/"
-        }),
-        new HtmlWebpackPlugin({
-            title: "RulesetBuilder",
-            template: "./html/ruleset_builder.html",
-            chunks: ["ruleset_builder"],
-            filename: "./ruleset_builder.html",
-            publicPath: "/"
-        }),
-        new HtmlWebpackPlugin({
-            title: "Bouncing Balls",
-            template: "./html/bouncing_balls.html",
-            chunks: ["bouncing_balls"],
-            filename: "./bouncing_balls.html",
-            publicPath: "/"
-        })
+        html_generator("Bouncing Balls", "bouncing_balls"),
+        html_generator("Index", "index"),
+        html_generator("Login", "login"),
+        html_generator("RulesetBuilder", "ruleset_builder"),
     ]
 };

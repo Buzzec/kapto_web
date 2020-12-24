@@ -1,7 +1,7 @@
 import {LoginState, TestingParam} from "./LoginState";
 import {Nav} from "react-bootstrap";
 import React from "react";
-import {get_param} from "../QueryParams";
+import {get_param} from "./QueryParams";
 
 export enum Page{
     Home,

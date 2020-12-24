@@ -1,4 +1,5 @@
 use std::sync::Arc;
+use std::time::SystemTime;
 
 use serde::{Deserialize, Serialize};
 
@@ -95,12 +96,15 @@ async fn try_handle_user_request(token: Option<AuthToken>, request: UserRequest,
             })
         },
         UserRequest::Login { username, password } => {
+            let time1 = SystemTime::now();
             let user = verify_user_password(&username, &password, &pool).await?;
             let token = DatabaseToken::new(user.id).create_token(&pool).await?;
-            Ok(Response {
+            let out = Ok(Response {
                 token: Some(token.into()),
                 data: ResponseData::User(UserResponse::full_user(user)),
-            })
+            });
+            println!("Login Time: {:?}", SystemTime::now().duration_since(time1));
+            out
         },
         UserRequest::DeleteUser { username, password } => {
             let user = verify_user_password(&username, &password, &pool).await?;

@@ -33,20 +33,21 @@ export class PacketError {
 export async function ping(value: number): Promise<PacketResult<number>> {
     const response = await make_request(NewApiRequest({Ping: value}));
     const error = check_error(response.data);
-    if (error != null) {
+    if (error) {
         return error;
     }
     // @ts-ignore
     if ("Pong" in response.data) {
         return response.data.Pong;
     } else {
+        console.error(response);
         return new PacketError("Bad Packet");
     }
 }
 export async function make_user_request(request: UserRequest): Promise<PacketResult<ApiResponse>> {
     const response = await make_request(NewApiRequest({User: request}));
     const error = check_error(response.data);
-    if (error instanceof PacketError) {
+    if (error) {
         return error;
     }
     return response;

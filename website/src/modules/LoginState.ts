@@ -1,4 +1,4 @@
-import {get_user} from "../api/user";
+import {get_user} from "./api/user";
 
 export const TestingParam = "testing";
 

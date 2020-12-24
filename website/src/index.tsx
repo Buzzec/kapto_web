@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import {Accordion, Button, Card} from "react-bootstrap";
 import {RulesetBuilder} from "./modules/RulesetBuilder";
 import {NavigationBar} from "./modules/component/NavigationBar";
-import {Page} from "./modules/component/Page";
+import {Page} from "./modules/Page";
 
 ReactDOM.render(
     <React.Fragment>

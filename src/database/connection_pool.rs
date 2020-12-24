@@ -1,4 +1,5 @@
 use std::convert::Infallible;
+use std::str::FromStr;
 use std::sync::Arc;
 
 use mysql_async::{Conn, OptsBuilder, Pool};
@@ -33,7 +34,8 @@ impl ConnectionPool{
                 .user(Some(user))
                 .pass(Some(password))
                 .ip_or_hostname(host)
-                .db_name(Some(db_name + ":" + &port))
+                .tcp_port(u16::from_str(&port).unwrap())
+                .db_name(Some(db_name))
             ),
         }
     }
@@ -48,11 +50,16 @@ impl ConnectionPool{
 }
 
 #[cfg(test)]
-mod test{
+mod test {
+    use mysql_async::prelude::Queryable;
+
     use crate::database::connection_pool::ConnectionPool;
 
-    #[test]
-    fn connection_test(){
-        ConnectionPool::new().expect("Could not connect");
+    #[tokio::test]
+    async fn connection_test() {
+        let pool = ConnectionPool::new().expect("Could not connect");
+        let mut connection = pool.get_connection().await.expect("Could not get connection");
+        let result: i32 = connection.query_first("SELECT 100").await.expect("Could not execute query").expect("No result");
+        assert_eq!(result, 100);
     }
 }

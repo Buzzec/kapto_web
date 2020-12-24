@@ -9,7 +9,7 @@ use crate::database::{DatabaseError, DatabaseResult, get_from_row};
 use crate::database::connection_pool::ConnectionPool;
 use crate::database::procedures::Procedure;
 
-const TOKEN_LENGTH: usize = 128 / 8;
+const TOKEN_LENGTH: usize = 128;
 
 #[derive(Clone, Debug)]
 pub struct DatabaseToken {
@@ -41,10 +41,14 @@ impl DatabaseToken {
 
     pub async fn create_token(self, pool: &ConnectionPool) -> DatabaseResult<Self> {
         match Procedure::CreateToken.exec_first(&mut pool.get_connection().await?, vec![
-            ("user_id", self.user_id.into())
+            ("user_id", self.user_id.into()),
+            ("token", self.token.into()),
         ]).await? {
             Some(value) => Ok(value),
-            None => Err(DatabaseError::NotFound),
+            None => {
+                eprintln!("WHYYYYY");
+                Err(DatabaseError::NotFound)
+            },
         }
     }
 
